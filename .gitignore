@@ -1,0 +1,28 @@
+#backend
+backend/node_modules/
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+#frontend
+frontend/dist/
+
+#env files
+.env
+*.env
+
+#database dumps
+*.sql
+*.db
+*.sqlite
+
+
+#logs
+*.log
+
+#osfiles
+.DS_Store
+Thumbs.db
+
+#nvim
+*.swp
+*.swo 
