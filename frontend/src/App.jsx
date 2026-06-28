@@ -2,26 +2,48 @@ import { useState } from "react";
 
 export default function App() {
   const [message, setMessage] = useState("");
+  const [response, setResponse] = useState("");
 
-  async function testBackend() {
-    const response = await fetch(
-      "http://localhost:3000/api/test"
+  async function askLLM() {
+    setResponse("Thinking...");
+
+    const res = await fetch(
+      "http://localhost:3000/api/chat",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message,
+        }),
+      }
     );
 
-    const data = await response.json();
+    const data = await res.json();
 
-    setMessage(data.message);
+    setResponse(data.answer);
   }
 
   return (
     <>
       <h1>PDF Summarizer</h1>
 
-      <button onClick={testBackend}>
-        Test Backend
+      <input
+        type="text"
+        value={message}
+        onChange={(e) =>
+          setMessage(e.target.value)
+        }
+      />
+
+      <button onClick={askLLM}>
+        Send
       </button>
 
-      <pre>{message}</pre>
+      <hr />
+
+      <pre>{response}</pre>
     </>
   );
 }
